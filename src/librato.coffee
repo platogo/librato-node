@@ -15,10 +15,10 @@ librato.configure = (newConfig) ->
   worker = new Worker job: librato.flush
   
 librato.increment = (name) ->
-  collector.increment(name)
+  collector.increment "#{config.prefix ? ''}#{name}"
 
 librato.timing = (name, valueMs) ->
-  collector.timing(name, valueMs)
+  collector.timing "#{config.prefix ? ''}#{name}", valueMs
   
 librato.measure = librato.timing # alias
     
