@@ -5,7 +5,7 @@ packageJson = require '../package.json'
 class Client
   endpoint: 'https://metrics-api.librato.com/v1'
 
-  constructor: ({email, token}) ->
+  constructor: ({email, token, @source}) ->
     if not email or not token
       console.warn 'librato-node metrics disabled: no email or token provided.'
     else
@@ -13,6 +13,8 @@ class Client
     
   send: (json, cb) ->
     return unless @_authHeader
+
+    json.source = @source if @source?
     requestOptions =
       method: 'POST'
       uri: "#{@endpoint}/metrics"
